@@ -1,17 +1,23 @@
-import fs from 'fs';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 
-export const expandPath = (path: string) => {
-  if (path.startsWith('~')) {
-    return path.replace('~', process.env.HOME || '');
+// Turns "~", "~/x", relative or absolute input into a clean absolute path.
+export const expandPath = (inputPath: string) => {
+  let expandedPath = inputPath;
+  if (
+    inputPath === '~' ||
+    inputPath.startsWith('~/') ||
+    inputPath.startsWith('~\\')
+  ) {
+    expandedPath = path.join(os.homedir(), inputPath.slice(1));
   }
-  return path;
+  return path.resolve(expandedPath);
 };
 
-export const isExistingDirectory = (path: string) => {
-  const expandedPath = expandPath(path);
+export const isExistingDirectory = (inputPath: string) => {
   try {
-    const stats = fs.statSync(expandedPath);
-    return stats.isDirectory();
+    return fs.statSync(inputPath).isDirectory();
   } catch {
     return false;
   }

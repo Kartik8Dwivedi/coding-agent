@@ -1,3 +1,4 @@
+import path from 'node:path';
 import dotenv from 'dotenv';
 import { z } from 'zod';
 import { expandPath, isExistingDirectory } from '../util/pathUtils.js';
@@ -11,11 +12,11 @@ const envSchema = z.object({
   PORT: z.string().default('3001'),
   MONGO_URI: z.string().min(1, 'MONGO_URI is required'),
   AGENT_NAME: z.string().default(`Kartik's Coding Agent`),
-  MAX_MODEL_CALLS_PER_RUN: z.number().default(10),
-  MAX_READ_BYTES: z.number().default(1000000), // 1MB
+  MAX_MODEL_CALLS_PER_RUN: z.coerce.number().default(10),
+  MAX_READ_BYTES: z.coerce.number().default(1000000), // 1MB
   HITL_ENABLED: z.stringbool().default(false),
   WORKING_DIRECTORY: z.string()
-                        .default(`${process.cwd()}/workspace`)
+                        .default(path.join(process.cwd(), 'workspace'))
                         .transform(expandPath)
                         .refine(isExistingDirectory, 'WORKING_DIRECTORY must be an existing directory'),
 });
@@ -38,8 +39,8 @@ const AppConfig = Object.freeze({
   PORT: env.PORT,
   MONGO_URI: env.MONGO_URI,
   PROJECT_ROOT: process.cwd(),
-  PROMPTS_DIRECTORY: `${process.cwd()}/prompts`,
-  WORKSPACE_DIRECTORY: `${process.cwd()}/workspace`,
+  PROMPTS_DIRECTORY: path.join(process.cwd(), 'prompts'),
+  WORKSPACE_DIRECTORY: path.join(process.cwd(), 'workspace'),
   AGENT_NAME: env.AGENT_NAME,
   MAX_MODEL_CALLS_PER_RUN: env.MAX_MODEL_CALLS_PER_RUN,
   MAX_READ_BYTES: env.MAX_READ_BYTES,
