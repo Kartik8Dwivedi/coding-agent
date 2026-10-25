@@ -5,7 +5,7 @@ import AppConfig from '../config/AppConfig.js';
 
 export function normalizePath(inputPath: string): string {
   /**
-   * This function normalizes a given file path by replacing backslashes with forward slashes and removing any leading './' from the path.
+   This function normalizes a given file path by replacing backslashes with forward slashes and removing any leading './' from the path.
    */
 
   let normalized = inputPath.replace(/\\/g, '/');
@@ -17,6 +17,9 @@ export function normalizePath(inputPath: string): string {
 }
 
 export function isPathBlocked(inputPath: string): boolean {
+    /*
+    This function checks if a given input path matches any of the blocked path patterns defined in BLOCKED_PATH_PATTERNS. It normalizes the input path and then tests it against each pattern using regular expressions.
+    */
     const normalizedPath = normalizePath(inputPath);
 
     return BLOCKED_PATH_PATTERNS.some((pattern) => {
@@ -34,6 +37,9 @@ export function isPathBlocked(inputPath: string): boolean {
 }
 
 export function resolveWorkPath(inputPath: string): string {
+    /*
+    This function resolves a given input path relative to the working directory specified in the AppConfig. It ensures that the resolved path does not escape the working directory and creates the working directory if it does not exist.
+    */
     const workDir = path.resolve(AppConfig.WORKING_DIRECTORY);
 
     if (!fs.existsSync(workDir)) {
