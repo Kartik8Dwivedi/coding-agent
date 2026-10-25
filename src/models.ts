@@ -24,16 +24,16 @@ const PROVIDERS: Provider[] = [
     name: 'Groq',
     env_var: 'GROQ_API_KEY',
     if_free: false,
-    base_url: 'https://api.groq.com/v1',
+    base_url: 'https://api.groq.com/openai/v1',
     model: 'groq-3.5-turbo',
   },
   {
     name: 'Gemini',
     env_var: 'GEMINI_API_KEY',
     if_free: false,
-    base_url: 'https://api.gemini.com/v1',
-    model: 'gemini-3.5-turbo',
-  }
+    base_url: 'https://generativelanguage.googleapis.com/v1beta/openai/',
+    model: 'gemini-flash-latest',
+  },
 ];
 
 function selectProvider(): [Provider, string] {

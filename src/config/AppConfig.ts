@@ -10,7 +10,7 @@ const envSchema = z.object({
     .enum(['development', 'production', 'test'])
     .default('development'),
   PORT: z.string().default('3001'),
-  MONGO_URI: z.string().min(1, 'MONGO_URI is required'),
+  MONGO_URI: z.string().optional(),
   AGENT_NAME: z.string().default(`Kartik's Coding Agent`),
   MAX_MODEL_CALLS_PER_RUN: z.coerce.number().default(10),
   MAX_READ_BYTES: z.coerce.number().default(1000000), // 1MB
