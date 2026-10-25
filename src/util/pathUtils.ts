@@ -22,3 +22,17 @@ export const isExistingDirectory = (inputPath: string) => {
     return false;
   }
 };
+
+
+export const BLOCKED_PATH_PATTERNS = [
+    ".env",
+    ".env.*",
+    ".pem",
+    ".key",
+    ".secret",
+    ".git",
+    ".git/**",
+    "*.log",
+    "*.p12"
+]
+
