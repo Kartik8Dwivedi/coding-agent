@@ -9,7 +9,8 @@
     "noImplicitOverride": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    // Off: with it on, LangChain's middleware types (e.g. humanInTheLoopMiddleware) resolve to `never`
+    "exactOptionalPropertyTypes": false,
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
     "esModuleInterop": true,
